@@ -3,7 +3,7 @@
 ==============================
 
 Originally written to power `my blog`__, this project grew out of my
-tiredness with the crappy HTML produced by `ReStructured Text`__'s
+tiredness with the crappy HTML produced by `reStructuredText`__'s
 default writers.
 
 __ https://github.com/bradleywright/intranation.com

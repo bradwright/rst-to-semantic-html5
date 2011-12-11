@@ -14,7 +14,7 @@ setup(
     author='Bradley Wright <brad@intranation.com>',
     packages=['html5writer', 'tests'],
     keywords = "rst html5 doctutils",
-    description='A REStructured Text writer for writing semantic HTML5',
+    description='A reStructuredText writer for writing semantic HTML5',
     long_description=read('README.rst'),
     license='BSD License',
     include_package_data=True,
