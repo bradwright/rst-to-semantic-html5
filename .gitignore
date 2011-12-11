@@ -1,2 +1,4 @@
 build
 html5writer.egg-info
+*.pyc
+*.egg
