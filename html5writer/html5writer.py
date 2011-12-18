@@ -46,7 +46,8 @@ class SemanticHTML5Translator(html4css1.HTMLTranslator):
                  and atts['href'].startswith('mailto:')):
                 atts['href'] = self.cloak_mailto(atts['href'])
                 self.in_mailto = 1
-            atts['rel'] = 'external'
+            if atts['href'].startswith('http'):
+                atts['rel'] = 'external'
         else:
             assert 'refid' in node, \
                    'References must have "refuri" or "refid" attribute.'

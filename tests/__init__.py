@@ -12,5 +12,28 @@ class TestNoDivSection(unittest.TestCase):
         out_text = u"""<p>Lorem ipsem dolor sit amet</p>"""
         self.assertEqual(text_to_rst(in_text), out_text)
 
+
+class TestCodeElements(unittest.TestCase):
+    def test_inline_code(self):
+        in_text = """``code here``"""
+        out_text = u"""<p><code>code here</code></p>"""
+        self.assertEqual(text_to_rst(in_text), out_text)
+
+
+class TestLinkElements(unittest.TestCase):
+    def test_external_link(self):
+        in_text = """A link `goes here`__
+
+__ http://google.com"""
+        out_text = u"""<p>A link <a href="http://google.com" rel="external">goes here</a></p>"""
+        self.assertEqual(text_to_rst(in_text), out_text)
+
+    def test_internal_link(self):
+        in_text = """A link `goes here`__
+
+__ /something"""
+        out_text = u"""<p>A link <a href="/something">goes here</a></p>"""
+        self.assertEqual(text_to_rst(in_text), out_text)
+
 if __name__ == '__main__':
     unittest.main()
