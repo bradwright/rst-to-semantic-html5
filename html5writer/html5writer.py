@@ -1,5 +1,7 @@
 #!/usr/bin/env python
-from docutils import nodes
+import re
+
+from docutils import nodes, utils
 from docutils.writers import html4css1
 from docutils.core import publish_parts
 from docutils.parsers.rst import roles, directives, Directive
@@ -67,17 +69,44 @@ class SemanticHTML5Translator(html4css1.HTMLTranslator):
     def depart_literal(self, node):
         self.body.append('</code>')
 
+    def visit_abbreviation(self, node):
+        attrs = {}
+        if node.hasattr('explanation'):
+            attrs['title'] = node['explanation']
+        self.body.append(self.starttag(node, 'abbr', '', **attrs))
+
+    def depart_abbreviation(self, node):
+        self.body.append('</abbr>')
+
+
 def inline_roles(role, raw, text, *args):
     if role == 'kbd':
         return [nodes.literal('kbd', text)], []
     elif role == 'var':
         return [nodes.literal('var', text)], []
-    elif role == 'abbr':
-        return [nodes.literal('abbr', text)], []
 
 roles.register_local_role('kbd', inline_roles)
 roles.register_local_role('var', inline_roles)
-roles.register_local_role('abbr', inline_roles)
+
+# FIXME: this has to be lowercase for some reason
+class abbreviation(nodes.Inline, nodes.TextElement):
+    """Node for abbreviations with explanations."""
+
+nodes._add_node_class_names('abbreviation')
+
+_abbr_re = re.compile('\((.*)\)$', re.S)
+
+def abbr_role(typ, rawtext, text, lineno, inliner, options={}, content=[]):
+    text = utils.unescape(text)
+    m = _abbr_re.search(text)
+    if m is None:
+        return [abbreviation(text, text)], []
+    abbr = text[:m.start()].strip()
+    expl = m.group(1)
+    return [abbreviation(abbr, abbr, explanation=expl)], []
+
+roles.register_local_role('abbr', abbr_role)
+
 
 if __name__ == '__main__':
     import sys

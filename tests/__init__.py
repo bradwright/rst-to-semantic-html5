@@ -20,6 +20,18 @@ class TestCodeElements(unittest.TestCase):
         self.assertEqual(text_to_rst(in_text), out_text)
 
 
+class TestCustomInlineElements(unittest.TestCase):
+    def test_kbd_element(self):
+        in_text = """:kbd:`sudo`"""
+        out_text = u"""<p><kbd>sudo</kbd></p>"""
+        self.assertEqual(text_to_rst(in_text), out_text)
+
+    def test_abbr_element(self):
+        in_text = """:abbr:`lol (laugh out loud)`"""
+        out_text = u"""<p><abbr title="laugh out loud">lol</abbr></p>"""
+        self.assertEqual(text_to_rst(in_text), out_text)
+
+
 class TestLinkElements(unittest.TestCase):
     def test_external_link(self):
         in_text = """A link `goes here`__
