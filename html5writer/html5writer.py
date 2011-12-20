@@ -78,10 +78,22 @@ class SemanticHTML5Translator(html4css1.HTMLTranslator):
     def depart_abbreviation(self, node):
         self.body.append('</abbr>')
 
+    def visit_kbd(self, node):
+        self.body.append(self.starttag(node, 'kbd', ''))
+
+    def depart_kbd(self, node):
+        self.body.append('</kbd>')
+
+
+
+class kbd(nodes.Inline, nodes.TextElement):
+    """Node for kbd element"""
+
+nodes._add_node_class_names('kbd')
 
 def inline_roles(role, raw, text, *args):
     if role == 'kbd':
-        return [nodes.literal('kbd', text)], []
+        return [kbd('kbd', text)], []
     elif role == 'var':
         return [nodes.literal('var', text)], []
 
