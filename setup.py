@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import os
+import sys
 from setuptools import setup
 
 # Utility function to read the README file.
@@ -8,6 +9,10 @@ from setuptools import setup
 # string in below ...
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
+
+extra = {}
+if sys.version_info >= (3,):
+    extra['use_2to3'] = True
 
 setup(
     name='html5writer',
@@ -20,5 +25,6 @@ setup(
     long_description=read('README.rst'),
     license='BSD License',
     include_package_data=True,
-    install_requires=['docutils']
+    install_requires=['docutils'],
+    **extra
 )
