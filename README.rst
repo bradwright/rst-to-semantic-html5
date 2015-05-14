@@ -19,6 +19,6 @@ when HTML5 has perfectly good semantics for that:
 
 ::
 
-  <section id="my-section-name">..</div>
+  <section id="my-section-name">..</section>
 
 as a basic example.
